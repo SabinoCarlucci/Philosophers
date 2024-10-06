@@ -50,5 +50,7 @@ struct s_data
 	t_philo	*philos; //array philosophers
 };
 
+void	error(char *msg);
+
 
 #endif

@@ -3,7 +3,6 @@
 #ifndef PHILO_H
 # define PHILO_H
 
-
 # include <stdio.h> //printf
 # include <stdlib.h> //malloc, free
 # include <unistd.h> //usleep
@@ -13,6 +12,12 @@
 typedef pthread_mutex_t t_mtx;
 
 typedef struct s_data t_data;
+
+# define INT "2147483647\0"
+# define PLUS_INT "+2147483647\0"
+# define LONG "9223372036854775807\0"
+# define PLUS_LONG "+9223372036854775807\0"
+
 
 typedef struct s_fork
 {

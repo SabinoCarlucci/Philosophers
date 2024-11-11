@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:20:54 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/11/11 15:20:59 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/11/11 16:50:30 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	is_num(char *arg)
 	{
 		if (arg[count] < '0' || arg[count] > '9')
 		{
-			error("input non numerico\0");//qui mettici un define
+			error(ERR_NUM);
 			return (1);
 		}
 		count++;
@@ -38,9 +38,9 @@ int	check_limits(char *arg, char *compare)
 	count = 0;
 	while (arg[count])
 	{
-		if (arg[count] >= compare[count])
+		if (arg[count] > compare[count])
 		{
-			error("Input beyond limit");
+			error(ERR_LIMIT);
 			return (1);
 		}
 		count++;
@@ -64,7 +64,7 @@ int	parsing(char **argv)
 			compare = LONG;
 		if (ft_strlen(argv[n_input]) > ft_strlen(compare))
 		{
-			error("troppe cifre in input\0");//define per il tipo di errore
+			error(ERR_LIMIT);
 			return (1);
 		}
 		else if (ft_strlen(argv[n_input]) == ft_strlen(compare))

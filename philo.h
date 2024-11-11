@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:21:25 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/11/11 15:59:42 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/11/11 16:59:45 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,20 @@ typedef struct s_data	t_data;
 //define compare for parsing
 # define INT "2147483647\0"
 # define LONG "9223372036854775807\0"
+
+//define errors
+# define ERR_USAGE "Usage:  ./philo 5 800 200 200 [5]"
+# define ERR_LIMIT "Input beyond limit"
+# define ERR_NUM "input non numerico"
+
+//define colors
+# define NO_COLOR "\033[0m"
+# define YELLOW "\033[0;33m"
+# define GREEN "\033[0;32m"
+# define RED "\033[0;31m"
+# define BLUE "\033[0;34m"
+# define CYAN "\033[0;36m"
+# define MAGENTA "\033[0;35m"
 
 typedef struct s_fork
 {

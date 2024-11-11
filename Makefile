@@ -17,7 +17,7 @@ CFLAGS = -Wall -Werror -Wextra -g
 
 all: ${NAME}
 
-${NAME}: ${OBJS} so_long.h
+${NAME}: ${OBJS} philo.h
 	@echo $(YELLOW) "compiling philo..."$(NO_COLOR)
 	@$(CC) ${CFLAGS} ${OBJS} -o ${NAME}
 	@echo $(GREEN)"compiled philo ✓✓✓"$(NO_COLOR)
@@ -28,12 +28,12 @@ ${NAME}: ${OBJS} so_long.h
 clean:
 	@echo $(YELLOW) "removing .o files..."$(NO_COLOR)
 	@rm -f ${OBJS}
-	@echo $(GREEN)"removed .o files ✓"$(NO_COLOR)
+	@echo $(GREEN)"removed .o files ✓✓✓"$(NO_COLOR)
 
 fclean: clean
 	@echo $(YELLOW) "removing NAME file..."$(NO_COLOR)
 	@rm -f ${NAME}
-	@echo $(GREEN)"removed NAME file ✓"$(NO_COLOR)
+	@echo $(GREEN)"removed NAME file ✓✓✓"$(NO_COLOR)
 
 re: fclean all
 

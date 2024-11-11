@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:21:08 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/11/11 16:01:10 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/11/11 16:59:54 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ int	main(int argc, char **argv)
 		return (0);
 	}
 	else
-		error("Usage:  ./philo 5 800 200 200 [5]");
+		error(ERR_USAGE);
 	return (0);
 }

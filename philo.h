@@ -1,4 +1,14 @@
-//metti header dopo aver iniziato progetto
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/04 17:21:25 by scarlucc          #+#    #+#             */
+/*   Updated: 2024/11/11 15:59:42 by scarlucc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
@@ -9,15 +19,13 @@
 # include <pthread.h> //thread and mutex
 # include <sys/time.h> // gettimeofday
 
-typedef pthread_mutex_t t_mtx;
+typedef pthread_mutex_t	t_mtx;
 
-typedef struct s_data t_data;
+typedef struct s_data	t_data;
 
+//define compare for parsing
 # define INT "2147483647\0"
-# define PLUS_INT "+2147483647\0"
 # define LONG "9223372036854775807\0"
-# define PLUS_LONG "+9223372036854775807\0"
-
 
 typedef struct s_fork
 {
@@ -55,7 +63,13 @@ struct s_data
 	t_philo	*philos; //array philosophers
 };
 
+//utils.c
 void	error(char *msg);
+size_t	ft_strlen(const char *s);
 
+//parsing.c
+int		is_num(char *arg);
+int		check_limits(char *arg, char *compare);
+int		parsing(char **argv);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:21:25 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/11/11 16:59:45 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/11/11 17:25:07 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ typedef pthread_mutex_t	t_mtx;
 
 typedef struct s_data	t_data;
 
-//define compare for parsing
+//define compare for parsing (long is divided by 1000 to account for conversion ms to us)
 # define INT "2147483647\0"
-# define LONG "9223372036854775807\0"
+# define LONG "9223372036854775\0"
 
 //define errors
 # define ERR_USAGE "Usage:  ./philo 5 800 200 200 [5]"

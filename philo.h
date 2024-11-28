@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:21:25 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/11/25 19:14:38 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/11/28 19:00:50 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_data	t_data;
 # define ERR_LIMIT "	input beyond limit"
 # define ERR_LIMIT_LOW "	input below limit"
 # define ERR_NUM "	input must be a number"
+# define ERR_GETTIME "	clock is broken"
 
 //define colors
 # define NO_COLOR "\033[0m"
@@ -45,11 +46,12 @@ typedef struct s_data	t_data;
 # define CYAN "\033[0;36m"
 # define MAGENTA "\033[0;35m"
 
-typedef struct s_fork
+//per ora tolgo la struct, sembra che non serva
+/* typedef struct s_fork
 {
 	t_mtx	fork;
 	int		f_id;
-}			t_fork;
+}			t_fork; */
 
 typedef struct s_philo
 {
@@ -57,9 +59,9 @@ typedef struct s_philo
 	int			meal_count;
 	int			full;//e' necessaria? non posso usare meal count?
 	long		when_last_meal;
-	t_fork		f_right;
-	t_fork		f_left;
-	pthread_t	thread_id;
+	t_mtx		*f_right;
+	t_mtx		*f_left;
+	pthread_t	thread;//a cosa serviva?
 	t_data		*data;
 }				t_philo;
 
@@ -76,19 +78,26 @@ struct s_data
 	long	time_to_sleep;
 	long	max_meals; // [5] optional
 	long	prog_start; // timestamp start program
-	int		prog_end; // timestamp end program
-	t_fork	*forks; // array forks
+	//int		prog_end; // timestamp end program //perche'?
+	t_mtx	*forks; // array forks
 	t_philo	*philos; //array philosophers
 };
 
 //utils.c
-void	error(const char *msg);
+int		whats_the_time();
 size_t	ft_strlen(const char *s);
 int		ft_atoi(const char *nptr);
+int		whats_the_time();
 
 //parsing.c
+void	error(const char *msg);
 int		is_num(char *arg);
 int		check_limits(char *arg, char *high_compare, int low_compare);
 int		parsing(int argc, char **argv, int n_input);
+
+//init.c
+int		init_forks(char **argv, t_data *table, int count);
+int		init_philos(char **argv, t_data *table, int count);
+int		init_sim(char **argv, t_data *table, int count);
 
 #endif

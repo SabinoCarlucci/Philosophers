@@ -20,3 +20,6 @@ risposta (Sasha):
 
 
 CANCELLA FILE PROVA.C
+
+PER CONTROLLARE USA:
+valgrind --tool=helgrind

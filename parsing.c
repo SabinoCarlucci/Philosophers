@@ -6,13 +6,22 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:20:54 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/11/25 19:14:44 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/11/28 16:57:22 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 //Usage:  ./philo 5 800 200 200 [5]
+
+void	error(const char *msg)
+{
+	write(2, RED, ft_strlen(RED));
+	write(2, "Error:\n", 7);
+	write(2, msg, ft_strlen(msg));
+	write(2, "\n", 1);
+	write(2, NO_COLOR, ft_strlen(NO_COLOR));
+}
 
 int	is_num(char *arg)
 {

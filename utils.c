@@ -12,13 +12,14 @@
 
 #include "philo.h"
 
-void	error(const char *msg)
+int	whats_the_time()
 {
-	write(2, RED, ft_strlen(RED));
-	write(2, "Error:\n", 7);
-	write(2, msg, ft_strlen(msg));
-	write(2, "\n", 1);
-	write(2, NO_COLOR, ft_strlen(NO_COLOR));
+	struct timeval tv;
+
+	if (gettimeofday(&tv, NULL) == -1)
+		return (error(ERR_GETTIME), -1);
+	else
+		return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
 size_t	ft_strlen(const char *s)

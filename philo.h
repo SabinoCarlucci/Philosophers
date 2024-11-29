@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:21:25 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/11/28 19:00:50 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/11/29 17:22:40 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ typedef struct s_data	t_data;
 //define compare for parsing
 # define LIM_PHILO "200\0"
 # define INT "2147483647\0"
-# define LIM_TIME 59 //time cannot be less than 60ms, and since operator is <=, I use 59
-
+# define LIM_TIME 59 //since operator is <=, I use 59
 
 //define errors
 # define ERR_IN_NUM "	input must be 5 or 6 values"
@@ -84,10 +83,10 @@ struct s_data
 };
 
 //utils.c
-int		whats_the_time();
+void	free_and_destroy(t_data *table, t_mtx *forks, int count);
+int		whats_the_time(void);
 size_t	ft_strlen(const char *s);
 int		ft_atoi(const char *nptr);
-int		whats_the_time();
 
 //parsing.c
 void	error(const char *msg);

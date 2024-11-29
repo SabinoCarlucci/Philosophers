@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:30:47 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/11/28 18:43:31 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/11/29 16:46:16 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,15 @@ int	init_philos(char **argv, t_data *table, int count)
 		table->philos[count].p_id = count + 1;
 		table->philos[count].meal_count = 0;
 		if (argv[5])
-			table->philos[count].full = argv[5];
+			table->philos[count].full = 0;
 		else
 			table->philos[count].full = -1;
 		table->philos[count].when_last_meal = table->prog_start;
-		if (count < table->p_total)
-			table->philos[count].f_right = &table->forks[count];
+		if ((count + 1) < table->p_total)
+			table->philos[count].f_right = &table->forks[count + 1];
 		else
 			table->philos[count].f_right = &table->forks[0];
-		table->philos[count].f_left = &table->forks[count - 1];
+		table->philos[count].f_left = &table->forks[count];
 		//cosa metto per thread? Forse non serve inizializzarlo qui
 		table->philos[count].data = table;
 	}
@@ -62,12 +62,11 @@ int	init_sim(char **argv, t_data *table, int count)
 		table->max_meals = -1;
 	table->prog_start == whats_the_time();
 	if (table->prog_start == -1)
-		return (1);//chiudi tutto
+		return (error("	failed to get time program start"), 1);
 	if (init_forks(argv, table, count))
 		return (1);
+	//count = -1;//senza, init_philos potrebbe usare il valore di count alterato da init_forks
 	if (init_philos(argv, table, count))
 		return (1);
-	
-	
-	return (0);//se tutto bene, altrimenti return (1)
+	return (0);
 }

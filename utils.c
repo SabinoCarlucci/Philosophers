@@ -4,17 +4,28 @@
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
-/*            +                                    +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 17:44:06 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/11/11 17:00:45 by scarlucc         ###   ########.fr       */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/29 17:19:41 by scarlucc          #+#    #+#             */
+/*   Updated: 2024/11/29 17:20:41 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	whats_the_time()
+void	free_and_destroy(t_data *table, t_mtx *forks, int count)
 {
-	struct timeval tv;
+	while (++count < table->p_total)
+	{
+		if (pthread_mutex_destroy(&forks[count]) != 0)
+			error("	failed to destroy forks");
+	}
+	free(table->forks);
+	free(table->philos);
+}
+
+int	whats_the_time(void)
+{
+	struct timeval	tv;
 
 	if (gettimeofday(&tv, NULL) == -1)
 		return (error(ERR_GETTIME), -1);

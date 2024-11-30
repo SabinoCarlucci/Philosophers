@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:21:08 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/11/29 17:24:11 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/11/30 20:01:33 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	main(int argc, char **argv)
 {
 	t_data	table;
+	int		count;
 
 	if (parsing(argc, argv, 0))
 		return (1);
@@ -22,7 +23,17 @@ int	main(int argc, char **argv)
 	if (init_sim(argv ,&table, -1))
 		free_and_destroy(&table, table.forks, -1);
 	//3 start program
-
+	count = -1;
+	while (++count < table.p_total)
+	{
+		if (pthread_create(&table.philos[count].thread, NULL, &start_routine,
+				&table.philos[count]) != 0)
+		{
+			error("	philo creation failed");
+			return (free_and_destroy(&table, table.forks, -1), 1);
+		}
+	}
+	start_prog(&table, -1);
 	//end program
 	free_and_destroy(&table, table.forks, -1);
 	return (0);

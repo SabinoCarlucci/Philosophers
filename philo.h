@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:21:25 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/11/29 17:22:40 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/11/30 20:02:14 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,22 @@ typedef pthread_mutex_t	t_mtx;
 
 typedef struct s_data	t_data;
 
+//define philo messages
+# define FORK " has taken a fork\n"
+# define EAT "  is eating\n"
+# define SLEEP " is sleeping\n"
+# define THINK " is thinking\n"
+# define DIED " died\n"
+
+//define colors
+# define GREEN "\033[0;32m"
+# define YELLOW "\033[0;33m"
+# define BLUE "\033[0;34m"
+# define CYAN "\033[0;36m"
+# define MAGENTA "\033[0;35m"
+# define RED "\033[0;31m"
+# define NO_COLOR "\033[0m"
+
 //define compare for parsing
 # define LIM_PHILO "200\0"
 # define INT "2147483647\0"
@@ -35,15 +51,6 @@ typedef struct s_data	t_data;
 # define ERR_LIMIT_LOW "	input below limit"
 # define ERR_NUM "	input must be a number"
 # define ERR_GETTIME "	clock is broken"
-
-//define colors
-# define NO_COLOR "\033[0m"
-# define YELLOW "\033[0;33m"
-# define GREEN "\033[0;32m"
-# define RED "\033[0;31m"
-# define BLUE "\033[0;34m"
-# define CYAN "\033[0;36m"
-# define MAGENTA "\033[0;35m"
 
 //per ora tolgo la struct, sembra che non serva
 /* typedef struct s_fork
@@ -60,7 +67,7 @@ typedef struct s_philo
 	long		when_last_meal;
 	t_mtx		*f_right;
 	t_mtx		*f_left;
-	pthread_t	thread;//a cosa serviva?
+	pthread_t	thread;//identificatore thread creato con pthread_create
 	t_data		*data;
 }				t_philo;
 
@@ -98,5 +105,8 @@ int		parsing(int argc, char **argv, int n_input);
 int		init_forks(char **argv, t_data *table, int count);
 int		init_philos(char **argv, t_data *table, int count);
 int		init_sim(char **argv, t_data *table, int count);
+
+//philo_things.c
+void	start_routine(void *point);
 
 #endif

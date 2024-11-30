@@ -1,9 +1,16 @@
 # Philosophers
 42 Philosophers project
 
+CANCELLA FILE PROVA.C
+
+PER CONTROLLARE USA:
+valgrind --tool=helgrind
+
 ✓✓✓ PARSING
 
 
+
+----------------------
 Conversione tempi vari da millisecondi a microsecondi?
 	perchè usleep usa i microsecondi, mentre l'input del programa philo 
 	è in millisecondi
@@ -19,7 +26,3 @@ risposta (Sasha):
 - Da quel che ricordo, il tempo dell'ultimo pasto di un filosofo equivale all'inizio dell'ultimo pasto, ma questo si deve segnare come completato (incrementare la variabile di quante volte uno ha mangiato) solo dopo aver aspettato il time to eat perché il filosofo potrebbe morire mentre sta mangiando.
 
 
-CANCELLA FILE PROVA.C
-
-PER CONTROLLARE USA:
-valgrind --tool=helgrind

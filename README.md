@@ -9,6 +9,7 @@ valgrind --tool=helgrind
 - aggiungi codice per limite pasti in dead_or_full()
 
 - codice per casistica 1 solo filosofo in philo_think()
+	potrebbe non servire
 
 - dividi codice in piu' funzioni
 

@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 17:19:41 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/12/03 17:57:25 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/12/03 22:04:25 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ void	time_message(t_philo	*philo, const char	*color, const char	*message)
 
 void	cleanup(t_data *table)
 {
-	int	count;
-
-	count = -1;
 	if (pthread_mutex_destroy(&table->stop_mtx) != 0)
 			error("	failed to destroy stop_mtx");
 	free(table->forks);

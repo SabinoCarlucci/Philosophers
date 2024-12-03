@@ -6,19 +6,32 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 17:19:41 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/11/29 17:20:41 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/12/03 17:57:25 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	free_and_destroy(t_data *table, t_mtx *forks, int count)
+void	time_message(t_philo	*philo, const char	*color, const char	*message)
 {
-	while (++count < table->p_total)
-	{
-		if (pthread_mutex_destroy(&forks[count]) != 0)
-			error("	failed to destroy forks");
-	}
+	int	timestamp;
+	
+	pthread_mutex_lock(&philo->data->start_mtx);//forse salvezza
+	timestamp = whats_the_time() - philo->data->prog_start;
+	pthread_mutex_unlock(&philo->data->start_mtx);
+	if (timestamp < 0)
+		error("	time_message failed because gettimeofday failed");
+	else
+		printf("%s%i %i %s%s", color, timestamp, philo->p_id, message, NO_COLOR);
+}
+
+void	cleanup(t_data *table)
+{
+	int	count;
+
+	count = -1;
+	if (pthread_mutex_destroy(&table->stop_mtx) != 0)
+			error("	failed to destroy stop_mtx");
 	free(table->forks);
 	free(table->philos);
 }

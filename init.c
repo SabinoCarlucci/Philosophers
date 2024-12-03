@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:30:47 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/11/29 16:46:16 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/12/03 17:55:56 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	init_forks(char **argv, t_data *table, int count)
 
 int	init_philos(char **argv, t_data *table, int count)
 {
-	table->philos = malloc(sizeof(t_mtx) * ft_atoi(argv[1]));
+	count = -1;
+	table->philos = malloc(sizeof(t_philo) * ft_atoi(argv[1]));
 	if (!table->philos)
 		return (error("	malloc philos failed"), 1);
 	while (++count < table->p_total)
@@ -60,13 +61,26 @@ int	init_sim(char **argv, t_data *table, int count)
 		table->max_meals = ft_atoi(argv[5]);
 	else
 		table->max_meals = -1;
-	table->prog_start == whats_the_time();
+	table->prog_start = whats_the_time();
 	if (table->prog_start == -1)
 		return (error("	failed to get time program start"), 1);
+	if (pthread_mutex_init(&table->start_mtx, NULL))
+		return (error("	failed to init start_mtx"), 1);
+	table->stop = 0;
+	if (pthread_mutex_init(&table->stop_mtx, NULL))
+		return (error("	failed to init stop_mtx"), 1);
 	if (init_forks(argv, table, count))
 		return (1);
 	//count = -1;//senza, init_philos potrebbe usare il valore di count alterato da init_forks
 	if (init_philos(argv, table, count))
 		return (1);
 	return (0);
+}
+
+int	stop_sim(t_data	*data)
+{
+	pthread_mutex_lock(&data->stop_mtx);
+	if (data->stop)
+		return (pthread_mutex_unlock(&data->stop_mtx), 1);
+	return (pthread_mutex_unlock(&data->stop_mtx), 0);
 }

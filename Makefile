@@ -9,11 +9,11 @@ MAGENTA = '\033[0;35m'
 
 NAME = philo
 
-SRCS = main.c parsing.c utils.c
+SRCS = main.c parsing.c utils.c init.c philo_things.c
 OBJS = ${SRCS:.c=.o}
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra -pthread -g
 
 all: ${NAME}
 

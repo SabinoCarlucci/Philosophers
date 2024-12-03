@@ -1,14 +1,44 @@
 # Philosophers
 42 Philosophers project
 
-CANCELLA FILE PROVA.C
-
 PER CONTROLLARE USA:
 valgrind --tool=helgrind
 
-✓✓✓ PARSING
+============ TO DO ==========
+
+- aggiungi codice per limite pasti in dead_or_full()
+
+- codice per casistica 1 solo filosofo in philo_think()
+
+- dividi codice in piu' funzioni
+
+- ✓✓✓ PARSING
+
+=========== BUGS ===========
+
+- con valgrind ./philo 5 150 200 200 fa cose strane
 
 
+--------- RISOLTI 
+
+- stampa messaggi dopo morte
+	risolto: dovevo mettere piu' controlli sul mutex stop durante le azioni dei filosofi
+
+- errore failed to destroy forks stampato due volte
+	risolto: non serviva proprio distruggere i mutex, dato che li ho allocati con malloc
+
+- philo 3 muore e non dovrebbe
+	risolto: era la presa forchette diversa per ultimo philo dispari
+
+- programma non si ferma dopo morte
+	risolto: causato da mutex rimasti bloccati
+
+
+
+02/12/2024
+parlando con Bard, ho scoperto che serve mettere un mutex ad ogni variabile a cui accedono piu' thread,
+ a prescindere da cosa ci facciano.
+Quindi, anche il timestamp di avvio al programma
 
 ----------------------
 Conversione tempi vari da millisecondi a microsecondi?

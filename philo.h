@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:21:25 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/12/03 17:57:30 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/12/04 14:41:24 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ struct s_data
 	int		time_to_sleep;
 	int		max_meals; // [5] optional
 	int		prog_start; // timestamp start program
-	t_mtx	start_mtx;
 	int		stop;
 	t_mtx	stop_mtx;
+	t_mtx	msg;
 	t_mtx	*forks; // array forks
 	t_philo	*philos; //array philosophers
 };
@@ -85,6 +85,7 @@ void	cleanup(t_data *table);
 int		whats_the_time(void);
 size_t	ft_strlen(const char *s);
 int		ft_atoi(const char *nptr);
+
 
 //parsing.c
 void	error(const char *msg);
@@ -97,6 +98,7 @@ int		init_forks(char **argv, t_data *table, int count);
 int		init_philos(char **argv, t_data *table, int count);
 int		init_sim(char **argv, t_data *table, int count);
 int		stop_sim(t_data	*data);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
 //philo_things.c
 int		dead_or_full(t_data	*data, int	count);

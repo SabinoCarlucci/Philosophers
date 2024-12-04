@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:30:47 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/12/03 17:55:56 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/12/04 14:41:20 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ int	init_sim(char **argv, t_data *table, int count)
 	table->prog_start = whats_the_time();
 	if (table->prog_start == -1)
 		return (error("	failed to get time program start"), 1);
-	if (pthread_mutex_init(&table->start_mtx, NULL))
-		return (error("	failed to init start_mtx"), 1);
 	table->stop = 0;
 	if (pthread_mutex_init(&table->stop_mtx, NULL))
 		return (error("	failed to init stop_mtx"), 1);
+	if (pthread_mutex_init(&table->msg, NULL))
+		return (error("	failed to init msg"), 1);
 	if (init_forks(argv, table, count))
 		return (1);
 	//count = -1;//senza, init_philos potrebbe usare il valore di count alterato da init_forks
@@ -83,4 +83,16 @@ int	stop_sim(t_data	*data)
 	if (data->stop)
 		return (pthread_mutex_unlock(&data->stop_mtx), 1);
 	return (pthread_mutex_unlock(&data->stop_mtx), 0);
+}
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
+
+	if (n == 0)
+		return (0);
+	i = 0;
+	while (s1[i] == s2[i] && (s1[i] != '\0' || s2[i] != '\0') && i < (n - 1))
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

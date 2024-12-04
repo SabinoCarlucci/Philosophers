@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 17:33:57 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/12/03 22:17:49 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/12/04 14:44:18 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	dead_or_full(t_data	*data, int	count)
 				int	i = -1;//fai in modo corretto
 				while (++i < data->p_total)//evita che filosofi vivi restino con forchette in mano dopo una morte
 				{
-					pthread_mutex_unlock(data->philos[i].f_right);//prova a mettere questo dentro cleanup()
+					pthread_mutex_unlock(data->philos[i].f_right);//prova a mettere questo dentro cleanup() e a ciclare array forchette invece di questo
 					pthread_mutex_unlock(data->philos[i].f_left);
 				}
 				return (time_message(&data->philos[count], CYAN, DIED), 1);//potrebbe ritardare il messaggio di morte, nel caso sposta sopra ciclo sblocca-forchette			

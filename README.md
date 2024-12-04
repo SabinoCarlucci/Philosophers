@@ -13,7 +13,9 @@ valgrind --tool=helgrind
 
 - dividi codice in piu' funzioni
 
-- ✓✓✓ PARSING
+- PARSING ✓✓✓ 
+
+- mutex su stampa messaggi ✓✓✓ 
 
 =========== BUGS ===========
 

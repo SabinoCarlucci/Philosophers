@@ -6,13 +6,13 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 17:33:57 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/12/04 14:44:18 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/12/04 14:52:20 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	dead_or_full(t_data	*data, int	count)
+int	dead_or_full(t_data	*data, int	count, int f_count)
 {
 	while (1)
 	{
@@ -24,12 +24,8 @@ int	dead_or_full(t_data	*data, int	count)
 				pthread_mutex_lock(&data->stop_mtx);
 				data->stop = 1;
 				pthread_mutex_unlock(&data->stop_mtx);
-				int	i = -1;//fai in modo corretto
-				while (++i < data->p_total)//evita che filosofi vivi restino con forchette in mano dopo una morte
-				{
-					pthread_mutex_unlock(data->philos[i].f_right);//prova a mettere questo dentro cleanup() e a ciclare array forchette invece di questo
-					pthread_mutex_unlock(data->philos[i].f_left);
-				}
+				while (++f_count < data->p_total)//evita che filosofi vivi restino con forchette in mano dopo una morte
+					pthread_mutex_unlock(&data->forks[f_count]);
 				return (time_message(&data->philos[count], CYAN, DIED), 1);//potrebbe ritardare il messaggio di morte, nel caso sposta sopra ciclo sblocca-forchette			
 			}
 			//controllo se pieni tutti

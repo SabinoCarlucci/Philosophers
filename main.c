@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:21:08 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/12/03 17:57:22 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/12/04 14:51:48 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char **argv)
 				&table.philos[count]) != 0)
 			return (error("	philo creation failed"), cleanup(&table), 1);
 	}
-	dead_or_full(&table, -1);
+	dead_or_full(&table, -1, -1);
 	count = -1;
 	while (++count < table.p_total)
 	{

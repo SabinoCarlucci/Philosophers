@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:21:25 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/12/04 14:41:24 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/12/04 14:51:35 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int		stop_sim(t_data	*data);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
 //philo_things.c
-int		dead_or_full(t_data	*data, int	count);
+int		dead_or_full(t_data	*data, int	count, int f_count);
 void	philo_think(t_philo	*philo);
 void	philo_eat(t_philo	*philo);
 void	philo_sleep(t_philo	*philo);

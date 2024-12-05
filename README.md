@@ -6,20 +6,13 @@ valgrind --tool=helgrind
 
 ============ TO DO ==========
 
-- aggiungi codice per limite pasti in dead_or_full()
+- ./philo 5 800 200 200 c'e' un ritardo di 1ms che si accumula. Va bene?
 
-- codice per casistica 1 solo filosofo in philo_think()
-	potrebbe non servire
 
 - dividi codice in piu' funzioni
 
-- PARSING ✓✓✓ 
-
-- mutex su stampa messaggi ✓✓✓ 
-
 =========== BUGS ===========
 
-- con valgrind ./philo 5 150 200 200 fa cose strane
 
 
 --------- RISOLTI 

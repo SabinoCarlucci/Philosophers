@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:30:47 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/12/04 14:41:20 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/12/05 17:33:44 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,15 @@ int	init_philos(char **argv, t_data *table, int count)
 		if (argv[5])
 			table->philos[count].full = 0;
 		else
-			table->philos[count].full = -1;
+			table->philos[count].full = -1;//forse superfluo
 		table->philos[count].when_last_meal = table->prog_start;
+		if (pthread_mutex_init(&table->philos[count].meal_mtx, NULL))
+			return (error("	failed to init meal_mtx"), 1);
 		if ((count + 1) < table->p_total)
 			table->philos[count].f_right = &table->forks[count + 1];
 		else
 			table->philos[count].f_right = &table->forks[0];
 		table->philos[count].f_left = &table->forks[count];
-		//cosa metto per thread? Forse non serve inizializzarlo qui
 		table->philos[count].data = table;
 	}
 	return (0);
@@ -60,7 +61,7 @@ int	init_sim(char **argv, t_data *table, int count)
 	if (argv[5])
 		table->max_meals = ft_atoi(argv[5]);
 	else
-		table->max_meals = -1;
+		table->max_meals = 0;
 	table->prog_start = whats_the_time();
 	if (table->prog_start == -1)
 		return (error("	failed to get time program start"), 1);
@@ -85,14 +86,14 @@ int	stop_sim(t_data	*data)
 	return (pthread_mutex_unlock(&data->stop_mtx), 0);
 }
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+void	stop_and_unfork(t_data	*data)
 {
-	size_t	i;
+	//int	f_count;
 
-	if (n == 0)
-		return (0);
-	i = 0;
-	while (s1[i] == s2[i] && (s1[i] != '\0' || s2[i] != '\0') && i < (n - 1))
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	//f_count = -1;
+	pthread_mutex_lock(&data->stop_mtx);
+	data->stop = 1;
+	pthread_mutex_unlock(&data->stop_mtx);
+	/* while (++f_count < data->p_total)//evita che filosofi vivi restino con forchette in mano dopo una morte
+		pthread_mutex_unlock(&data->forks[f_count]); */
 }

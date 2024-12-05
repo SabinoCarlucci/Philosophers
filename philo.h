@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:21:25 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/12/04 14:51:35 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/12/05 16:38:54 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_philo
 	int			meal_count;
 	int			full;//e' necessaria? non posso usare meal count?
 	int			when_last_meal;
+	t_mtx		meal_mtx;
 	t_mtx		*f_right;
 	t_mtx		*f_left;
 	pthread_t	thread;//identificatore thread creato con pthread_create
@@ -80,7 +81,7 @@ struct s_data
 };
 
 //utils.c
-void	time_message(t_philo	*philo, const char	*color, const char	*message);
+int	time_message(t_philo	*philo, const char	*color, const char	*message);
 void	cleanup(t_data *table);
 int		whats_the_time(void);
 size_t	ft_strlen(const char *s);
@@ -92,16 +93,17 @@ void	error(const char *msg);
 int		is_num(char *arg);
 int		check_limits(char *arg, char *high_compare, int low_compare);
 int		parsing(int argc, char **argv, int n_input);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
 //init.c
 int		init_forks(char **argv, t_data *table, int count);
 int		init_philos(char **argv, t_data *table, int count);
 int		init_sim(char **argv, t_data *table, int count);
 int		stop_sim(t_data	*data);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
+void	stop_and_unfork(t_data	*data);
 
 //philo_things.c
-int		dead_or_full(t_data	*data, int	count, int f_count);
+int		dead_or_full(t_data	*data, int	count, int	all_full);
 void	philo_think(t_philo	*philo);
 void	philo_eat(t_philo	*philo);
 void	philo_sleep(t_philo	*philo);

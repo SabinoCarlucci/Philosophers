@@ -13,7 +13,7 @@ SRCS = main.c parsing.c utils.c init.c philo_things.c
 OBJS = ${SRCS:.c=.o}
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -pthread -g
+CFLAGS = -Wall -Werror -Wextra -pthread -g #-fsanitize=thread #-O3
 
 all: ${NAME}
 

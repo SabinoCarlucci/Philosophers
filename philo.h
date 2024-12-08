@@ -6,11 +6,11 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:21:25 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/12/05 16:38:54 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/12/08 14:48:33 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
+# ifndef PHILO_H
 # define PHILO_H
 
 # include <stdio.h> //printf
@@ -45,23 +45,23 @@ typedef struct s_data	t_data;
 # define LIM_TIME 59 //since operator is <=, I use 59
 
 //define errors
-# define ERR_IN_NUM "	input must be 5 or 6 values"
+# define ERR_IN_NUM "	wrong arguments number"
 # define ERR_USAGE "	Usage:  ./philo 5 800 200 200 [5]"
 # define ERR_LIMIT "	input beyond limit"
 # define ERR_LIMIT_LOW "	input below limit"
-# define ERR_NUM "	input must be a number"
-# define ERR_GETTIME "	clock is broken"
+# define ERR_NUM "	input only characters 0 to 9"
+# define ERR_GETTIME "	gettimeofday error"
 
 typedef struct s_philo
 {
 	int			p_id;
 	int			meal_count;
-	int			full;//e' necessaria? non posso usare meal count?
+	int			full;
 	int			when_last_meal;
 	t_mtx		meal_mtx;
 	t_mtx		*f_right;
 	t_mtx		*f_left;
-	pthread_t	thread;//identificatore thread creato con pthread_create
+	pthread_t	thread;
 	t_data		*data;
 }				t_philo;
 

@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 17:19:41 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/12/05 17:54:10 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/12/06 09:01:18 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	time_message(t_philo	*philo, const char	*color, const char	*message)
 {
 	int	timestamp;
-	
+
 	pthread_mutex_lock(&philo->data->msg);
 	timestamp = whats_the_time() - philo->data->prog_start;
 	if (timestamp < 0)
@@ -26,9 +26,10 @@ int	time_message(t_philo	*philo, const char	*color, const char	*message)
 	pthread_mutex_lock(&philo->data->stop_mtx);
 	if (!philo->data->stop || !ft_strncmp(message, DIED, 5))
 	{
-		printf("%s%i %i %s%s", color, timestamp, philo->p_id, message, NO_COLOR);
+		printf("%s%i %i %s%s", color, timestamp, philo->p_id, message,
+			NO_COLOR);
 		pthread_mutex_unlock(&philo->data->stop_mtx);
-		return (pthread_mutex_unlock(&philo->data->msg), 0);//se questo e' messaggio morte, devo restituire 0 o 1?
+		return (pthread_mutex_unlock(&philo->data->msg), 0);
 	}
 	pthread_mutex_unlock(&philo->data->stop_mtx);
 	return (pthread_mutex_unlock(&philo->data->msg), 1);
@@ -40,10 +41,10 @@ void	cleanup(t_data *table)
 
 	count = -1;
 	if (pthread_mutex_destroy(&table->stop_mtx) != 0)
-			error("	failed to destroy stop_mtx");
+		error("	failed to destroy stop_mtx");
 	if (pthread_mutex_destroy(&table->msg) != 0)
-			error("	failed to destroy msg");
-	while (++count	< table->p_total)
+		error("	failed to destroy msg");
+	while (++count < table->p_total)
 	{
 		if (pthread_mutex_destroy(&table->philos[count].meal_mtx) != 0)
 			error("	failed to destroy meal_mtx in cleanup");

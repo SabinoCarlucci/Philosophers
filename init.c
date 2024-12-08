@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:30:47 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/12/05 17:33:44 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/12/08 17:08:07 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,55 @@ int	init_philos(char **argv, t_data *table, int count)
 	{
 		table->philos[count].p_id = count + 1;
 		table->philos[count].meal_count = 0;
-		if (argv[5])
-			table->philos[count].full = 0;
-		else
-			table->philos[count].full = -1;//forse superfluo
+		table->philos[count].full = 0;
 		table->philos[count].when_last_meal = table->prog_start;
 		if (pthread_mutex_init(&table->philos[count].meal_mtx, NULL))
 			return (error("	failed to init meal_mtx"), 1);
-		if ((count + 1) < table->p_total)
-			table->philos[count].f_right = &table->forks[count + 1];
+		/* if (table->p_total % 2 != 0)
+		{ */
+			/* if (table->philos[count].p_id % 2 != 0)//per filosofi dispari
+			{
+				table->philos[count].f_left = &table->forks[table->philos[count].p_id % table->p_total];
+				table->philos[count].f_right = &table->forks[count];
+				//printf("count: %d, Id: %d, f.right: %d, f.left: %d\n", count, table->philos[count].p_id, table->philos[count].p_id % table->p_total, count);
+			}
+			else
+			{
+				table->philos[count].f_left = &table->forks[count];//prima forchetta a destra
+				table->philos[count].f_right = &table->forks[table->philos[count].p_id % table->p_total];
+				//printf("count: %d, Id: %d, f.right: %d, f.left: %d\n", count, table->philos[count].p_id, count, table->philos[count].p_id % table->p_total);
+			} */
+			/* if (table->philos[count].p_id == table->p_total)
+			{
+				table->philos[count].f_right = &table->forks[count];
+				table->philos[count].f_left = &table->forks[table->philos[count].p_id % table->p_total]; //versione invertita di soluzione Amir incrociata con metodo Oceano
+				
+			}
+			else
+			{
+				table->philos[count].f_right = &table->forks[table->philos[count].p_id % table->p_total]; //funziona con 3 e 5 filosofi, ma non con 7 o piu'
+				table->philos[count].f_left = &table->forks[count];
+			}
+				//printf("count: %d, Id: %d, f.right: %d, f.left: %d\n", count, table->philos[count].p_id, table->philos[count].p_id % table->p_total, count);
+		}
 		else
-			table->philos[count].f_right = &table->forks[0];
+		{ */
+			/* if (table->philos[count].p_id % 2 == 0)//per filosofi dispari
+			{ */
 		table->philos[count].f_left = &table->forks[count];
+		table->philos[count].f_right = &table->forks[(count + 1) % table->p_total];
+				//printf("count: %d, Id: %d, f.right: %d, f.left: %d\n", count, table->philos[count].p_id, table->philos[count].p_id % table->p_total, count);
+			//}
+			/* else
+			{
+				table->philos[count].f_right = &table->forks[count];//prima forchetta a destra
+				table->philos[count].f_left = &table->forks[table->philos[count].p_id % table->p_total]; */
+				//printf("count: %d, Id: %d, f.right: %d, f.left: %d\n", count, table->philos[count].p_id, count, table->philos[count].p_id % table->p_total);
+			//}
+		
 		table->philos[count].data = table;
 	}
+	//exit (-1);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 17:33:57 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/12/05 18:03:25 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/12/08 16:59:02 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ int	dead_or_full(t_data	*data, int	count, int	all_full)
 				stop_and_unfork(data);
 				return (time_message(&data->philos[count], CYAN, DIED), 1);//potrebbe ritardare il messaggio di morte, nel caso sposta sopra ciclo sblocca-forchette			
 			}
-			//pthread_mutex_unlock(&data->philos[count].meal_mtx);//mutex per tempo ultimo pasto
-			//pthread_mutex_lock(&data->philos[count].meal_mtx);//mutex per tempo ultimo pasto
 			if (all_full && data->max_meals)//controllo se pieni tutti
 			{
 				if (data->philos[count].full == 0)
@@ -48,17 +46,19 @@ int	dead_or_full(t_data	*data, int	count, int	all_full)
 
 void	philo_think(t_philo	*philo)
 {
-	t_data	*data;
+	/* t_data	*data;
 
-	data = philo->data;
-	if (time_message(philo, MAGENTA, THINK))
-		return ;	
+	data = philo->data; */
+	/* if (time_message(philo, MAGENTA, THINK))
+		return ; */
+	time_message(philo, MAGENTA, THINK);
 	pthread_mutex_lock(philo->f_right);
-	if (time_message(philo, GREEN, FORK))
+	/* if (time_message(philo, GREEN, FORK))
 	{
 		pthread_mutex_unlock(philo->f_right);
 		return ;
-	}
+	} */
+	time_message(philo, GREEN, FORK);
 	if (philo->data->p_total == 1)
 	{
 		usleep(philo->data->time_to_die * 1000);
@@ -71,25 +71,27 @@ void	philo_think(t_philo	*philo)
 void	philo_eat(t_philo	*philo)
 {
 	pthread_mutex_lock(philo->f_left);
-	if (time_message(philo, GREEN, FORK))
+	time_message(philo, GREEN, FORK);//posticcio
+	/* if (time_message(philo, GREEN, FORK))
 	{
-		pthread_mutex_unlock(philo->f_right);
 		pthread_mutex_unlock(philo->f_left);
+		pthread_mutex_unlock(philo->f_right);
 		return ;
-	}
-	if (time_message(philo, YELLOW, EAT))
+	} */
+	time_message(philo, YELLOW, EAT);
+	/* if (time_message(philo, YELLOW, EAT))
 	{
-		pthread_mutex_unlock(philo->f_right);
 		pthread_mutex_unlock(philo->f_left);
+		pthread_mutex_unlock(philo->f_right);
 		return ;
-	}
+	} */
 	pthread_mutex_lock(&philo->meal_mtx);//mutex per tempo ultimo pasto
 	philo->when_last_meal = whats_the_time();//e' giusto accedere a questa risorsa con meal_mtx? negli altri casi uso msg
 	pthread_mutex_unlock(&philo->meal_mtx);//mutex per tempo ultimo pasto
 	if (usleep(philo->data->time_to_eat * 1000) != 0)
 		error("	philo failed usleep while eating");
-	pthread_mutex_unlock(philo->f_right);
 	pthread_mutex_unlock(philo->f_left);
+	pthread_mutex_unlock(philo->f_right);
 	philo->meal_count++;
 	if (philo->meal_count == philo->data->max_meals)//forse mutex
 		philo->full = 1;
@@ -100,10 +102,12 @@ void	philo_sleep(t_philo	*philo)
 {
 	if (stop_sim(philo->data))
 		return ;
-	time_message(philo, BLUE, SLEEP);
+	time_message(philo, BLUE, SLEEP);//ci metto if?
 	if (usleep(philo->data->time_to_sleep * 1000) != 0)
 		error("	philo failed usleep while sleeping");
-	philo_think(philo);
+	/* if (philo->data->p_total % 2 != 0)//ultima aggiunta per evitare che muoiano a cazzo
+		usleep(50); */
+	//philo_think(philo);
 }
 
 void	*start_dinner(void *point)
@@ -111,8 +115,10 @@ void	*start_dinner(void *point)
 	t_philo	*philo;
 
 	philo = (t_philo *)point;
-	if (philo->p_id % 2 == 0)
-		usleep(100);
+	if (philo->p_id % 2 != 0)//ultima aggiunta
+		usleep(200);
+	/* if (philo->data->p_total % 2 != 0 && (philo->p_id % 2 == 0 || philo->p_id == philo->data->p_total))
+		usleep(10); */
 	while (1)
 	{
 		if (stop_sim(philo->data))

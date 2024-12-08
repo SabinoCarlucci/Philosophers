@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:30:47 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/12/08 17:08:07 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/12/08 19:42:54 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,63 +27,25 @@ int	init_forks(char **argv, t_data *table, int count)
 
 int	init_philos(char **argv, t_data *table, int count)
 {
+	t_philo	*philo;
+
 	count = -1;
 	table->philos = malloc(sizeof(t_philo) * ft_atoi(argv[1]));
 	if (!table->philos)
 		return (error("	malloc philos failed"), 1);
 	while (++count < table->p_total)
 	{
-		table->philos[count].p_id = count + 1;
-		table->philos[count].meal_count = 0;
-		table->philos[count].full = 0;
-		table->philos[count].when_last_meal = table->prog_start;
-		if (pthread_mutex_init(&table->philos[count].meal_mtx, NULL))
+		philo = &table->philos[count];
+		philo->p_id = count + 1;
+		philo->meal_count = 0;
+		philo->full = 0;
+		philo->when_last_meal = table->prog_start;
+		if (pthread_mutex_init(&philo->meal_mtx, NULL))
 			return (error("	failed to init meal_mtx"), 1);
-		/* if (table->p_total % 2 != 0)
-		{ */
-			/* if (table->philos[count].p_id % 2 != 0)//per filosofi dispari
-			{
-				table->philos[count].f_left = &table->forks[table->philos[count].p_id % table->p_total];
-				table->philos[count].f_right = &table->forks[count];
-				//printf("count: %d, Id: %d, f.right: %d, f.left: %d\n", count, table->philos[count].p_id, table->philos[count].p_id % table->p_total, count);
-			}
-			else
-			{
-				table->philos[count].f_left = &table->forks[count];//prima forchetta a destra
-				table->philos[count].f_right = &table->forks[table->philos[count].p_id % table->p_total];
-				//printf("count: %d, Id: %d, f.right: %d, f.left: %d\n", count, table->philos[count].p_id, count, table->philos[count].p_id % table->p_total);
-			} */
-			/* if (table->philos[count].p_id == table->p_total)
-			{
-				table->philos[count].f_right = &table->forks[count];
-				table->philos[count].f_left = &table->forks[table->philos[count].p_id % table->p_total]; //versione invertita di soluzione Amir incrociata con metodo Oceano
-				
-			}
-			else
-			{
-				table->philos[count].f_right = &table->forks[table->philos[count].p_id % table->p_total]; //funziona con 3 e 5 filosofi, ma non con 7 o piu'
-				table->philos[count].f_left = &table->forks[count];
-			}
-				//printf("count: %d, Id: %d, f.right: %d, f.left: %d\n", count, table->philos[count].p_id, table->philos[count].p_id % table->p_total, count);
-		}
-		else
-		{ */
-			/* if (table->philos[count].p_id % 2 == 0)//per filosofi dispari
-			{ */
-		table->philos[count].f_left = &table->forks[count];
-		table->philos[count].f_right = &table->forks[(count + 1) % table->p_total];
-				//printf("count: %d, Id: %d, f.right: %d, f.left: %d\n", count, table->philos[count].p_id, table->philos[count].p_id % table->p_total, count);
-			//}
-			/* else
-			{
-				table->philos[count].f_right = &table->forks[count];//prima forchetta a destra
-				table->philos[count].f_left = &table->forks[table->philos[count].p_id % table->p_total]; */
-				//printf("count: %d, Id: %d, f.right: %d, f.left: %d\n", count, table->philos[count].p_id, count, table->philos[count].p_id % table->p_total);
-			//}
-		
-		table->philos[count].data = table;
+		philo->f_left = &table->forks[count];
+		philo->f_right = &table->forks[(count + 1) % table->p_total];
+		philo->data = table;
 	}
-	//exit (-1);
 	return (0);
 }
 
@@ -107,7 +69,6 @@ int	init_sim(char **argv, t_data *table, int count)
 		return (error("	failed to init msg"), 1);
 	if (init_forks(argv, table, count))
 		return (1);
-	//count = -1;//senza, init_philos potrebbe usare il valore di count alterato da init_forks
 	if (init_philos(argv, table, count))
 		return (1);
 	return (0);
@@ -121,14 +82,18 @@ int	stop_sim(t_data	*data)
 	return (pthread_mutex_unlock(&data->stop_mtx), 0);
 }
 
-void	stop_and_unfork(t_data	*data)
+int	check_all_full(t_data	*data, int count)
 {
-	//int	f_count;
-
-	//f_count = -1;
-	pthread_mutex_lock(&data->stop_mtx);
-	data->stop = 1;
-	pthread_mutex_unlock(&data->stop_mtx);
-	/* while (++f_count < data->p_total)//evita che filosofi vivi restino con forchette in mano dopo una morte
-		pthread_mutex_unlock(&data->forks[f_count]); */
+	if (data->philos[count].full == 0)
+		return (0);
+	else if ((count + 1) == data->p_total)
+	{
+		pthread_mutex_unlock(&data->philos[count].meal_mtx);
+		pthread_mutex_lock(&data->stop_mtx);
+		data->stop = 1;
+		pthread_mutex_unlock(&data->stop_mtx);
+		return (-1);
+	}
+	else
+		return (1);
 }

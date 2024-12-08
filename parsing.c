@@ -6,13 +6,11 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:20:54 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/12/04 17:30:27 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/12/08 19:44:45 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-//Usage:  ./philo 5 800 200 200 [5]
 
 void	error(const char *msg)
 {

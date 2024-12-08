@@ -6,11 +6,11 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:21:25 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/12/08 14:48:33 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/12/08 19:43:00 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef PHILO_H
+#ifndef PHILO_H
 # define PHILO_H
 
 # include <stdio.h> //printf
@@ -81,12 +81,12 @@ struct s_data
 };
 
 //utils.c
-int	time_message(t_philo	*philo, const char	*color, const char	*message);
+int		time_message(t_philo	*philo, const char	*color,
+			const char	*message);
 void	cleanup(t_data *table);
 int		whats_the_time(void);
 size_t	ft_strlen(const char *s);
 int		ft_atoi(const char *nptr);
-
 
 //parsing.c
 void	error(const char *msg);
@@ -100,10 +100,10 @@ int		init_forks(char **argv, t_data *table, int count);
 int		init_philos(char **argv, t_data *table, int count);
 int		init_sim(char **argv, t_data *table, int count);
 int		stop_sim(t_data	*data);
-void	stop_and_unfork(t_data	*data);
+int		check_all_full(t_data	*data, int count);
 
 //philo_things.c
-int		dead_or_full(t_data	*data, int	count, int	all_full);
+int		dead_or_full(t_data	*data, int count, int all_full);
 void	philo_think(t_philo	*philo);
 void	philo_eat(t_philo	*philo);
 void	philo_sleep(t_philo	*philo);

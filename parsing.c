@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:20:54 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/12/08 19:44:45 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/12/09 09:48:40 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,24 @@ int	is_num(char *arg)
 	return (0);
 }
 
-int	check_limits(char *arg, char *high_compare, int low_compare)
+int	check_limits(char *arg, char *high_compare, int low_compare, int count)
 {
-	int	count;
-
-	count = -1;
 	if (ft_strlen(arg) > ft_strlen(high_compare))
 		return (error(ERR_LIMIT), 1);
 	else if (ft_strlen(arg) == ft_strlen(high_compare))
 	{
-		while (arg[++count])
+		if (!ft_strncmp(high_compare, LIM_PHILO, ft_strlen(LIM_PHILO)))
 		{
-			if (arg[count] > high_compare[count])
+			if (ft_atoi(arg) > ft_atoi(high_compare))
 				return (error(ERR_LIMIT), 1);
+		}
+		else
+		{
+			while (arg[++count])
+			{
+				if (arg[count] > high_compare[count])
+					return (error(ERR_LIMIT), 1);
+			}
 		}
 	}
 	else
@@ -68,17 +73,17 @@ int	parsing(int argc, char **argv, int n_input)
 			return (1);
 		if (n_input == 1)
 		{
-			if (check_limits(argv[n_input], LIM_PHILO, 0))
+			if (check_limits(argv[n_input], LIM_PHILO, 0, -1))
 				return (1);
 		}
 		else if (n_input == 5)
 		{
-			if (check_limits(argv[n_input], INT, 0))
+			if (check_limits(argv[n_input], INT, 0, -1))
 				return (1);
 		}
 		else
 		{
-			if (check_limits(argv[n_input], INT, LIM_TIME))
+			if (check_limits(argv[n_input], INT, LIM_TIME, -1))
 				return (1);
 		}
 	}

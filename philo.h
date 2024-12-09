@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:21:25 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/12/08 19:43:00 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/12/09 09:46:54 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_data	t_data;
 # define ERR_USAGE "	Usage:  ./philo 5 800 200 200 [5]"
 # define ERR_LIMIT "	input beyond limit"
 # define ERR_LIMIT_LOW "	input below limit"
-# define ERR_NUM "	input only characters 0 to 9"
+# define ERR_NUM "	input must be characters 0 to 9"
 # define ERR_GETTIME "	gettimeofday error"
 
 typedef struct s_philo
@@ -91,7 +91,7 @@ int		ft_atoi(const char *nptr);
 //parsing.c
 void	error(const char *msg);
 int		is_num(char *arg);
-int		check_limits(char *arg, char *high_compare, int low_compare);
+int		check_limits(char *arg, char *high_compare, int low_compare, int count);
 int		parsing(int argc, char **argv, int n_input);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
